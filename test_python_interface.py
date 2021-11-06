@@ -3,7 +3,11 @@
 '''
 
 import mariadb
+import random
 import sys
+import sqlalchemy #(only n00bs and wizards write sql queries)
+from sqlalchemy.ext.declarative import declarative_base
+
 
 #basic connection to a server
 try:
@@ -22,22 +26,29 @@ except mariadb.Error as e:
 # Get Cursor
 cur = conn.cursor()
 
-cur.execute("DESCRIBE data")
+cur.execute("show tables")
 
 #rsults stored in cur, let's see what's there
 for thing in cur:
 	print(thing)
 
+try:
+	for i in range(0,100):
+		cur.execute(
+			"INSERT INTO data (value0) VALUES (%s)"%
+			(random.random()*100))
+except mariadb.Error as e:
+	print(f"Error: {e}")
+		
 
-cur.execute(
-	"INSERT INTO data (EID,value0) VALUES (?,?)",
-	(1,7.75))
-	
 cur.execute(
 	"SELECT EID, value0 FROM data",
 	)
 	
 for (eid,value) in cur:
 	print(eid,value)
-	
+
+conn.commit() 
+print(f"Last Inserted ID: {cur.lastrowid}")
+conn.close()
 	
