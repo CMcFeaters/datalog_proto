@@ -5,7 +5,7 @@ DROP DATABASE IF EXISTS datalogDB2;
 SET default_storage_engine=InnoDB;
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE DATABASE IF NOT EXISTS datalogDB2 
+CREATE DATABASE IF NOT EXISTS datalogDB2
     DEFAULT CHARACTER SET utf8mb4 
     DEFAULT COLLATE utf8mb4_unicode_ci;
 
@@ -21,5 +21,5 @@ CREATE DATABASE IF NOT EXISTS datalogDB2
 CREATE TABLE datalogDB2.data (
 	EID INT PRIMARY KEY,
 	DT DATETIME,
-	value0 FLOAT,
+	value0 FLOAT
 	);	
