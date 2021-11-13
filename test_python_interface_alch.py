@@ -9,17 +9,23 @@ import sqlalchemy as sa #(only n00bs and wizards write sql queries)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 import datetime
+import os
+from dotenv import load_dotenv
 
+#load our basic environment variables
+load_dotenv()
+print(os.getenv("uname"),os.getenv("pw"))
 
 #basic connection to a server
-engine=sa.create_engine("mariadb+mariadbconnector://USCGuser:USCG123@127.0.0.1:3307/datalogdb2")
+
+engine=sa.create_engine("mariadb+mariadbconnector://%s:%s@127.0.0.1:3307/datalogdb2"%(os.getenv("uname"),os.getenv("pw")))
 
 
 #declare teh tables 
 
 Base=declarative_base()
 
-#primary database with all the relationships
+#primary database with all the relationships, this is actually probably not that importatnt
 class Datalog(Base):
 	__tablename__='datalog'
 	CID=sa.Column(sa.Integer,primary_key=True,autoincrement=True)
@@ -41,6 +47,16 @@ class Fan(Base):
 	value4=sa.Column(sa.Float)
 	datalog_id=sa.Column(sa.Integer,sa.ForeignKey('datalog.CID'))
 	datalog=relationship("Datalog",back_populates="fans")
+	
+	#what do i do if i'm called
+	def __repr__(self):
+		return("I'm a fan!")
+		
+	#what i do if i'm printed
+	def __str__(self):
+		s="| %s | %s | %s | %s | %s | %s | %s | %s | %s |"%(self.EID,self.fanName,self.ts,self.value0, 
+			self.value1, self.value2, self.value3, self.value4, self.datalog_id)
+		return s
 
 
 class Motor(Base):
@@ -94,39 +110,44 @@ for i in range(0,100):
 #Session.add(newDatalog)
 
 #create a bunch of random garbage for our tables
-for i in range(0,100000):
-	newFan=Fan(ts=datetime.datetime.now(),
-	fanName=fan_names[random.randrange(4)],
-	value0=random.random()*100,
-	value1=random.random()*100,
-	value2=random.random()*100,
-	value3=random.random()*100,
-	value4=random.random()*100,
-	datalog_id=1)
-	
-	newMotor=Motor(ts=datetime.datetime.now(),
-	motorName=motor_names[random.randrange(4)],
-	value0=random.random()*100,
-	value1=random.random()*100,
-	value2=random.random()*100,
-	value3=random.random()*100,
-	value4=random.random()*100,
-	datalog_id=1)
-	
-	newBearing=Bearing(ts=datetime.datetime.now(),
-	bearingName=bearing_names[random.randrange(4)],
-	value0=random.random()*100,
-	value1=random.random()*100,
-	value2=random.random()*100,
-	value3=random.random()*100,
-	value4=random.random()*100,
-	datalog_id=1)
+if __name__=="__main__":
 
-	Session.add(newFan)
-	Session.add(newMotor)
-	Session.add(newBearing)
+	
+	for j in range (0,800):
+		for i in range(0,100000):
+			newFan=Fan(ts=datetime.datetime.now(),
+			fanName=fan_names[random.randrange(4)],
+			value0=random.random()*100,
+			value1=random.random()*100,
+			value2=random.random()*100,
+			value3=random.random()*100,
+			value4=random.random()*100,
+			datalog_id=1)
+			
+			newMotor=Motor(ts=datetime.datetime.now(),
+			motorName=motor_names[random.randrange(4)],
+			value0=random.random()*100,
+			value1=random.random()*100,
+			value2=random.random()*100,
+			value3=random.random()*100,
+			value4=random.random()*100,
+			datalog_id=1)
+			
+			newBearing=Bearing(ts=datetime.datetime.now(),
+			bearingName=bearing_names[random.randrange(4)],
+			value0=random.random()*100,
+			value1=random.random()*100,
+			value2=random.random()*100,
+			value3=random.random()*100,
+			value4=random.random()*100,
+			datalog_id=1)
 
-Session.commit()
+			Session.add(newFan)
+			Session.add(newMotor)
+			Session.add(newBearing)
+
+		Session.commit()
+
 
 #query data
 #log=Session.query(Datalog).all()

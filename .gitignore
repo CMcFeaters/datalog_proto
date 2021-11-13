@@ -111,6 +111,10 @@ env.bak/
 venv.bak/
 Scripts/
 
+#Misc
+sql_CMDS.txt
+bin/
+
 # Spyder project settings
 .spyderproject
 .spyproject
