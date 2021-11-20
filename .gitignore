@@ -114,6 +114,7 @@ Scripts/
 #Misc
 sql_CMDS.txt
 bin/
+*.csv
 
 # Spyder project settings
 .spyderproject
