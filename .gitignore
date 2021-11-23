@@ -115,6 +115,7 @@ Scripts/
 sql_CMDS.txt
 bin/
 *.csv
+testoutput.py
 
 # Spyder project settings
 .spyderproject
