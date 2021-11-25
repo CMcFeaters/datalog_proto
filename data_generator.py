@@ -2,7 +2,7 @@
 A file that generates a bunch of garbage for us to use in our DB
 '''
 
-import sqlalchemy as sa #(only n00bs and wizards write sql queries)
+import sqlalchemy as sa
 import random
 import datetime
 from test_python_interface_alch import Fan, Motor, Bearing, Session

@@ -20,7 +20,10 @@ print(os.getenv("uname"),os.getenv("pw"))
 engine=sa.create_engine("mariadb+mariadbconnector://%s:%s@127.0.0.1:3307/datalogdb2"%(os.getenv("uname"),os.getenv("pw")))
 
 
-#declare teh tables 
+'''
+THis section defines the schema using the SQLAlchemy ORM model
+'''
+#initialize declarative base
 Base=declarative_base()
 
 #primary table with all the relationships, this is actually probably not that importatnt

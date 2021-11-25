@@ -1,16 +1,15 @@
 # datalog_proto
-Prototype of large database parser widget.  Thsi is going to be the thing between the massive DB and the R program that converts the DB into usable chunks
+A simple proof of concept to resolve the issue of dealing with a DB that is larger than available memory in R.  This program functions as a widget between the DB and the R program, running a simple DB query on the DB and producing a *.csv of the results.  
 
-----packages----
+The files contained here include a means to develop the large DB, the DB schema, and a simple loader that creates the .csv.
+
+----SETUP----
+for a list of packages see "packages.txt"
+
 Uses mariaDB as the database server and client
 -mariadb: https://mariadb-corporation.github.io/mariadb-connector-python/
 
-Uses Python3
-Uses sqlalchemy
--https://www.sqlalchemy.org/
-
-uses python-dotenv 0.15.0
-"pip install python-dotenv"
+Uses a *.env setup for database access.  The following shoudl be setup:
 https://pypi.org/project/python-dotenv/
 
 1) The *.env file contians your access info to the database.  should be located in [program direcroty]
@@ -26,7 +25,8 @@ pw="whatever_the_secret_is"
 -timer tool for testing
 
 'basic_loader'
--this is the start of the data log loader, this will be the thing that pulls this massive DB into a bunch of little DBs
+-this is the start of the data log loader, this will be the thing that queries the DB and produces a manageable csv file
 
 'datalog_schema.sql'
--schema for the datalog
+-schema for the datalog, produced using mariadb sql with:
+"mysqldump -h yourhostnameorIP -u root -p --no-data dbname > datalog_schema.sql"
